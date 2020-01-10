@@ -11,25 +11,26 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixture extends Fixture
 {
     private $encoder;
-    
+
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
+
     public function load(ObjectManager $manager)
     {
-$role = new Role();
-$role->setLibelle("ADMIN_SYS");
-$manager->persist($role);
+        $role = new Role();
+        $role->setLibelle('ADMIN_SYS');
+        $manager->persist($role);
 
-$user = new User();
-$user->setUsername("supadmin");
-$user->setPassword($this->encoder->encodePassword($user, "system"));
-$user->setRoles(array("ROLE_".$role->getLibelle()));
-$user->setIsActive(true);
-$user->setProfil($role);
+        $user = new User();
+        $user->setUsername('supadmin');
+        $user->setPassword($this->encoder->encodePassword($user, 'system'));
+        $user->setRoles(array('ROLE_'.$role->getLibelle()));
+        $user->setIsActive(true);
+        $user->setProfil($role);
 
-$manager->persist($user);
+        $manager->persist($user);
         $manager->flush();
     }
 }
